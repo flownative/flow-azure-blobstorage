@@ -20,6 +20,7 @@ use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
 use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
 use MicrosoftAzure\Storage\Blob\Models\SetBlobPropertiesOptions;
 use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
+use MicrosoftAzure\Storage\Common\Internal\Resources;
 use Neos\Error\Messages\Error;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Log\Utility\LogEnvironment;
@@ -416,10 +417,7 @@ class AbsTarget implements TargetInterface
     public function getPublicStaticResourceUri($relativePathAndFilename): string
     {
         $relativePathAndFilename = $this->encodeRelativePathAndFilenameForUri($relativePathAndFilename);
-        # TODO Use configured name
-        # https://<accountname>.blob.core.windows.net/
-        $accountName = 'neosadaptortest';
-        return sprintf('https://%s.blob.core.windows.net/%s/%s%s', $accountName, $this->containerName, $this->keyPrefix, $relativePathAndFilename);
+        return sprintf('https://%s.%s/%s/%s%s', $this->blobService->getAccountName(), Resources::BLOB_BASE_DNS_NAME, $this->containerName, $this->keyPrefix, $relativePathAndFilename);
     }
 
     /**
@@ -497,10 +495,7 @@ class AbsTarget implements TargetInterface
         $customUri = $this->persistentResourceUriPattern;
         if (empty($customUri)) {
             if (empty($baseUri)) {
-                # TODO Use configured name
-                # https://<accountname>.blob.core.windows.net/
-                $accountName = 'neosadaptortest';
-                $baseUri = sprintf('https://%s.blob.core.windows.net/', $accountName);
+                $baseUri = sprintf('https://%s.%s/', $this->blobService->getAccountName(), Resources::BLOB_BASE_DNS_NAME);
                 $customUri = '{baseUri}{containerName}/{keyPrefix}{sha1}/{filename}';
             } else {
                 $customUri = self::DEFAULT_PERSISTENT_RESOURCE_URI_PATTERN;
