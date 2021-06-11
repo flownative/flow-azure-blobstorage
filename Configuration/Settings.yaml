@@ -4,12 +4,13 @@ Flownative:
       profiles:
         # Default credentials and client options - override these in your settings with real values
         default:
-          # The account name to use with the default connectionstring
-          accountName: ~
-          # The account key to use with the default connectionstring
-          accountKey: ~
+          credentials:
+            # The account name to use with the default connectionstring
+            accountName: ~
+            # The account key to use with the default connectionstring
+            accountKey: ~
 
-          # Custom connection string to use, see documentation at
-          # https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string
-          # If null, the CONNECTIONSTRING_TEMPLATE is used together with accountName and accountKey
-          connectionString: ~
+            # Custom connection string to use, see documentation at
+            # https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string
+            # If null, the CONNECTIONSTRING_TEMPLATE is used together with accountName and accountKey
+            connectionString: ~
