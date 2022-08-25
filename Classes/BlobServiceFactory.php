@@ -34,8 +34,6 @@ class BlobServiceFactory
     /**
      * Creates a new BlobRestProxy instance and authenticates against the Azure API
      *
-     * @param string $credentialsProfileName
-     * @return BlobRestProxy
      * @throws Exception
      */
     public function create(string $credentialsProfileName = 'default'): BlobRestProxy

@@ -43,13 +43,6 @@ class AbsTarget implements TargetInterface
 {
 
     /**
-     * Name which identifies this resource target
-     *
-     * @var string
-     */
-    protected $name = '';
-
-    /**
      * Name of the Azure Blob Storage container which should be used for publication
      *
      * @var string
@@ -171,9 +164,8 @@ class AbsTarget implements TargetInterface
      * @param array $options Options for this target
      * @throws Exception
      */
-    public function __construct(string $name, array $options = [])
+    public function __construct(protected string $name, array $options = [])
     {
-        $this->name = $name;
         foreach ($options as $key => $value) {
             switch ($key) {
                 case 'container':
@@ -246,7 +238,6 @@ class AbsTarget implements TargetInterface
     /**
      * Initialize the Azure Blob Storage instance
      *
-     * @return void
      * @throws BlobStorageException
      * @throws Exception
      */
@@ -264,7 +255,7 @@ class AbsTarget implements TargetInterface
             }
             $this->baseUri = $object->$methodName(
                 [
-                    'targetClass' => get_class($this),
+                    'targetClass' => $this::class,
                     'containerName' => $this->containerName,
                     'keyPrefix' => $this->keyPrefix,
                     'baseUri' => $this->baseUri,
@@ -286,17 +277,12 @@ class AbsTarget implements TargetInterface
 
     /**
      * Returns the object key prefix
-     *
-     * @return string
      */
     public function getKeyPrefix(): string
     {
         return $this->keyPrefix;
     }
 
-    /**
-     * @return string
-     */
     public function getContainerName(): string
     {
         return $this->containerName;
@@ -306,7 +292,6 @@ class AbsTarget implements TargetInterface
      * Publishes the whole collection to this target
      *
      * @param CollectionInterface $collection The collection to publish
-     * @return void
      * @throws \Exception
      * @throws \Neos\Flow\Exception
      */
@@ -358,11 +343,6 @@ class AbsTarget implements TargetInterface
     }
 
     /**
-     * @param CollectionInterface $collection
-     * @param AbsStorage $storage
-     * @param array $existingObjects
-     * @param array $obsoleteObjects
-     * @return void
      * @throws \Neos\Flow\Exception
      */
     private function publishCollectionFromDifferentAzureBlobStorage(CollectionInterface $collection, AbsStorage $storage, array $existingObjects, array &$obsoleteObjects): void
@@ -425,7 +405,6 @@ class AbsTarget implements TargetInterface
      *
      * @param PersistentResource $resource The resource to publish
      * @param CollectionInterface $collection The collection the given resource belongs to
-     * @return void
      * @throws Exception
      * @throws \Exception
      */
@@ -524,8 +503,6 @@ class AbsTarget implements TargetInterface
      * Publishes the specified source file to this target, with the given relative path.
      *
      * @param resource $sourceStream
-     * @param string $relativeTargetPathAndFilename
-     * @param ResourceMetaDataInterface $metaData
      * @throws \Exception
      */
     protected function publishFile($sourceStream, string $relativeTargetPathAndFilename, ResourceMetaDataInterface $metaData): void
@@ -596,9 +573,6 @@ class AbsTarget implements TargetInterface
 
     /**
      * Applies rawurlencode() to all path segments of the given $relativePathAndFilename
-     *
-     * @param string $relativePathAndFilename
-     * @return string
      */
     private function encodeRelativePathAndFilenameForUri(string $relativePathAndFilename): string
     {
@@ -607,9 +581,6 @@ class AbsTarget implements TargetInterface
 
     /**
      * Checks if the containers as storage and target are the same
-     *
-     * @param CollectionInterface $collection
-     * @return bool
      */
     private function isOneContainerSetup(CollectionInterface $collection): bool
     {
