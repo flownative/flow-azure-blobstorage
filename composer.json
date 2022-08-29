@@ -20,6 +20,7 @@
         "MIT"
     ],
     "require": {
+        "php": "^8.0",
         "neos/flow": "^7.0 || ^8.0",
         "microsoft/azure-storage-blob": "^1.5"
     },
