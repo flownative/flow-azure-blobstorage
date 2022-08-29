@@ -51,7 +51,6 @@ final class AbsCommandController extends CommandController
      * This command checks if the configured credentials and connectivity allows for connecting with the Azure API.
      *
      * @param string $container The container which is used for trying to upload and retrieve some test data
-     * @return void
      */
     public function connectCommand(string $container): void
     {
@@ -118,7 +117,7 @@ final class AbsCommandController extends CommandController
         } catch (\Exception $e) {
             $this->outputLine('<error>Publishing failed</error>');
             $this->outputLine($e->getMessage());
-            $this->outputLine(get_class($e));
+            $this->outputLine($e::class);
             exit(2);
         }
         $this->output->progressFinish();
@@ -205,7 +204,6 @@ final class AbsCommandController extends CommandController
     }
 
     /**
-     * @param string $collectionName
      * @return array [CollectionInterface, TargetInterface]
      */
     private function getResourceCollectionAndTarget(string $collectionName): array

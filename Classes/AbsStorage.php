@@ -34,13 +34,6 @@ use Psr\Log\LoggerInterface;
 class AbsStorage implements WritableStorageInterface
 {
     /**
-     * Name which identifies this resource storage
-     *
-     * @var string
-     */
-    protected $name = '';
-
-    /**
      * Name of the container which should be used as a storage
      *
      * @var string
@@ -96,9 +89,8 @@ class AbsStorage implements WritableStorageInterface
      * @param array $options Options for this storage
      * @throws Exception
      */
-    public function __construct(string $name, array $options = [])
+    public function __construct(protected string $name, array $options = [])
     {
-        $this->name = $name;
         $this->containerName = $name;
         foreach ($options as $key => $value) {
             switch ($key) {
@@ -123,7 +115,6 @@ class AbsStorage implements WritableStorageInterface
     /**
      * Initialize the Azure Blob Storage service instance
      *
-     * @return void
      * @throws Exception
      */
     public function initializeObject(): void
@@ -133,8 +124,6 @@ class AbsStorage implements WritableStorageInterface
 
     /**
      * Returns the instance name of this storage
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -143,8 +132,6 @@ class AbsStorage implements WritableStorageInterface
 
     /**
      * Returns the container name used as a storage
-     *
-     * @return string
      */
     public function getContainerName(): string
     {
@@ -153,8 +140,6 @@ class AbsStorage implements WritableStorageInterface
 
     /**
      * Returns the object key prefix
-     *
-     * @return string
      */
     public function getKeyPrefix(): string
     {
@@ -389,7 +374,6 @@ class AbsStorage implements WritableStorageInterface
     /**
      * Retrieve all Objects stored in this storage, filtered by the given collection name
      *
-     * @param CollectionInterface $collection
      * @return StorageObject[]
      * @api
      */
