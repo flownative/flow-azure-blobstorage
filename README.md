@@ -3,7 +3,7 @@
 [![Packagist](https://img.shields.io/packagist/dm/flownative/azure-blobstorage)](https://packagist.org/packages/flownative/azure-blobstorage)
 [![Maintenance level: Love](https://img.shields.io/badge/maintenance-%E2%99%A1%E2%99%A1%E2%99%A1-ff69b4.svg)](https://www.flownative.com/en/products/open-source.html)
 
-# Azure Blob Storage Adaptor for Neos 7.x and Flow 7.x
+# Azure Blob Storage Adaptor for Neos and Flow
 
 This [Flow](https://flow.neos.io) package allows you to store assets (resources)
 in [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/)
